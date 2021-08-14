@@ -1,0 +1,13 @@
+<section class="cats">
+        {{#if cats}}
+    <ul>
+        {{#each cats}}
+        {{> cats}}
+        {{/each}}
+    </ul>
+        {{else}}
+        <div class="cats">
+            There are no cats found...
+        </div>
+        {{/if}}
+</section>

@@ -1,0 +1,14 @@
+<form action="/cats/addCat" method="POST" class="cat-form" >
+    <h2>Add Cat</h2>
+    <label for="name">Name</label>
+    <input name="name" type="text" id="name" value="{{catData.name}}">
+    <label for="description">Description</label>
+    <textarea name="description" id="description">{{catData.description}}</textarea>
+    <label for="imgUrl">Image</label>
+    <input type="text" id="imgUrl" name="imageUrl" placeholder="https://" value="{{catData.imageUrl}}">
+    <label for="age">Age</label>
+    <input name="age" type="number" id="age" value="{{catData.age}}">
+    <label for="group">Breed</label>
+    <input name="bread" type="text" id="bread" value="{{catData.bread}}">
+    <button type="submit">Add Cat</button>
+</form>
