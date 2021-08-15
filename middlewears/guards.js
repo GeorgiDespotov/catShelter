@@ -3,6 +3,7 @@ function isUser() {
         if (req.user) {
             next();
         } else {
+
             res.redirect('/auth/login');
         }
     }
@@ -13,6 +14,7 @@ function isGuest() {
         if (!req.user) {
             next();
         } else {
+
             res.redirect('/');
         }
     }

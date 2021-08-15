@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
-const { isGuest } = require('../middlewears/guards');
+const { isGuest, isUser } = require('../middlewears/guards');
+const userServices = require('../services/user');
 
 
 router.get('/register', isGuest(), (req, res) => {
@@ -16,13 +17,13 @@ router.post('/register',
         .notEmpty().withMessage('Password is required!')
         .isLength({ min: 3 }).bail(),
     body('rePass')
-    .notEmpty().withMessage('You must repeat the password!')
-    .custom((value, { req }) => {
-        if (value != req.body.password) {
-            throw new Error('password don\'t match!')
-        }
-        return true
-    }),
+        .notEmpty().withMessage('You must repeat the password!')
+        .custom((value, { req }) => {
+            if (value != req.body.password) {
+                throw new Error('password don\'t match!')
+            }
+            return true
+        }),
     async (req, res) => {
         const { errors } = validationResult(req);
         try {
@@ -73,6 +74,20 @@ router.post('/login', isGuest(), async (req, res) => {
 router.get('/logout', (req, res) => {
     req.auth.logout();
     res.redirect('/');
+});
+
+router.get('/profile', isUser(), async (req, res) => {
+    try {
+
+        const user = await userServices.getUserById(req.user._id);
+
+        user.catNames = user.adoptedCats.map(cat => cat.name).join(', ');
+        res.render('user/profile', { user });
+    } catch (err) {
+        console.log(err.message);
+
+        res.redirect('/auth/login');
+    }
 });
 
 module.exports = router;

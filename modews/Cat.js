@@ -7,6 +7,7 @@ const catSchema = new Schema({
     description: { type: String },
     age: { type: Number },
     imageUrl: { type: String },
+    isAdopted: { type: Boolean, default: false },
     author: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 

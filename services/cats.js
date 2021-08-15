@@ -1,4 +1,5 @@
 const Cat = require('../modews/Cat');
+const User = require('../modews/User');
 
 
 async function getOneCat(id) {
@@ -24,8 +25,41 @@ async function addCat(catData) {
     return cat;
 }
 
+async function deleteCat(id) {
+    return Cat.findByIdAndDelete(id);
+}
+
+async function editCat(id, catData) {
+    const cat = await Cat.findById(id);
+
+    cat.name = catData.name;
+    cat.bread = catData.bread;
+    cat.description = catData.description;
+    cat.age = Number(catData.age);
+    cat.imageUrl = catData.imageUrl;
+
+    await cat.save();
+    return cat;
+}
+
+async function adoptCat(catId, userId) {
+    const user = await User.findById(userId);
+    const cat = await Cat.findById(catId);
+
+    cat.isAdopted = true;
+    user.adoptedCats.push(catId);
+
+    await user.save();
+    await cat.save();
+
+    return user;
+} 
+
 module.exports = {
     getAllCats,
     addCat,
-    getOneCat
+    getOneCat,
+    deleteCat,
+    editCat,
+    adoptCat
 }

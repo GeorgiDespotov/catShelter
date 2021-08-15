@@ -16,8 +16,13 @@ async function getUserByUsername(username) {
     const user = await User.findOne({username: {$regex: pattern}});
     return user;
 } 
+
+async function getUserById(id) {
+    return User.findById(id).populate('adoptedCats').lean();
+}
  
 module.exports = {
     createUser,
-    getUserByUsername
+    getUserByUsername,
+    getUserById
 }

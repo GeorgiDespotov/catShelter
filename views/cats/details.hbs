@@ -1,14 +1,33 @@
 <section>
+    {{#with cat}}
     <div class="cats">
         <img src="{{imageUrl}}" alt="">
     </div>
-    <div>
-        <h3>{{name}}</h3>
-        <h2>{{age}}</h2>
-        <h2>{{bread}}</h2>
-        <P>{{description}}</P>
+    <div class="cats">
+        <h1>Name: {{name}}</h1>
+        <h2>Age: {{age}}</h2>
+        <h2>Bread: {{bread}}</h2>
+        <p>Description: {{description}}</p>
     </div>
-    <a href=""></a>
-    <a href=""></a>
-    <a href=""></a>
+    {{#if isAdopted}}
+    <p class="cats">This cat is Adopted :)</p>
+    {{else}}
+    <div class="cats">
+        {{#if hasUser}}
+        <div class="cats">
+            {{#if isAuthor}}
+            <button>
+                <a href="/cats/editCat/{{_id}}">Edit</a>
+            </button>
+            <button>
+                <a href="/cats/deleteCat/{{_id}}">Delete</a>
+            </button>
+            {{else}}
+            <a href="/cats/adoptCat/{{_id}}">Adopt</a>
+            {{/if}}
+        </div>
+        {{/if}}
+    </div>
+    {{/if}}
+    {{/with}}
 </section>
